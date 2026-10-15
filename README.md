@@ -1,10 +1,12 @@
-# claude-brain-kit
+# hivemind
 
-One brain for every Claude Code session.
+Your Claude's second brain: everything it learns, backed up in one place.
 
-Claude Code keeps per-project memory under `~\.claude\projects\<project>\memory\`. It works, but each project's memory is invisible to every other project, and none of it is backed up anywhere. This kit gives you a **Brain**: one folder, ideally inside OneDrive or any synced location, that becomes the consolidated master of all your Claude Code memory.
+Claude Code has a global `CLAUDE.md` that you write yourself, and it saves what it learns on its own (auto memory) per project, under `~\.claude\projects\<project>\memory\`. That learned memory is invisible to every other project, and none of it is backed up anywhere. hivemind gives you a **Brain**: one folder, ideally inside OneDrive or any synced location, that becomes the consolidated master of everything Claude Code has learned.
 
-![Diagram: at session end, every project's Claude memory mirrors into one brain; the brain syncs off-machine; a new session in any project recalls its context from the brain.](docs/brain-flow.gif)
+![Diagram: every project's memory flows into one brain when a session ends, the brain is kept off the machine, and the next session in any project recalls from it.](docs/brain-flow.gif)
+
+More about it, with a case study from two weeks of real use: [awmium.com/agent-kit/hivemind](https://awmium.com/agent-kit/hivemind).
 
 It is two small mechanisms:
 
@@ -24,7 +26,7 @@ The per-project folders stay the working copies Claude Code loads. The Brain is 
 Clone this repo, open Claude Code anywhere, and say:
 
 ```text
-set up claude-brain-kit for me following the README at <path to this clone>
+set up hivemind for me following the README at <path to this clone>
 ```
 
 Claude does the six steps below for you. The manual route follows.
