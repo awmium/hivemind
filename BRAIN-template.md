@@ -17,14 +17,27 @@ copies; this folder is the human-browsable, OneDrive-synced master and backup.
 - **projects/** — one folder per project, a machine-managed mirror of that
   project's auto-memory dir. Do not edit here; edit the source auto-memory dir
   and the mirror follows.
-- **last-backup.txt** — timestamp and scope of the most recent sync.
+- **archive/** — append-only history, never pruned. Every note that disappears
+  or changes, in projects/ or global/, keeps its previous version here as
+  `<note> (deleted|replaced YYYY-MM-DD).md`; archive-log.txt lists every entry
+  by date. Written only by the hook.
+- **.state/** — the hook's last-seen copy of global/, used only to detect what
+  changed. Hidden; never read or edit it.
+- **last-backup.txt** — timestamp, scope and archived count of the most recent
+  sync.
 
 ## How it syncs
 
 A SessionEnd hook in C:\Users\CHANGE-ME\.claude\settings.json runs
 C:\Users\CHANGE-ME\.claude\scripts\brain-backup.ps1 at the end of every Claude
 Code session. It robocopy /MIR's each non-empty project memory dir into
-projects/, so deletions propagate too. global/ is never touched by the hook.
+projects/, so projects/ always shows only current memory. Before anything is
+deleted or overwritten, its previous version is copied into archive/. global/
+is never modified by the hook, only compared against .state/ so its deletions
+and edits land in archive/ too.
+
+Recall order: current folders first; archive/ only when the current Brain lacks
+the fact or the question is about what was known before.
 
 To give a new project a friendly folder name, extend the $friendlyNames table
 in brain-backup.ps1; unknown projects fall back to their raw sanitized name.
